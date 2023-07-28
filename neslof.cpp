@@ -117,7 +117,9 @@ bool parseFormatString(const char* str, vector<FormatSegment>& out) {
 		s++;
 	}
 	
-	if (begin < str + length) {
+	if (state == ParseIndex) {
+		out.emplace_back(FormatSegment { buffer, parsedIndex, isStaticCompspec });
+	} else if (begin < str + length) {
 		buffer.append(begin, str + length);
 		out.emplace_back(FormatSegment { buffer, 0, isStaticCompspec });
 	}
